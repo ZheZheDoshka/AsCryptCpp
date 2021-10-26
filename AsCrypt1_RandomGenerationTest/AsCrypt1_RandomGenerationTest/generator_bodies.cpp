@@ -1,8 +1,21 @@
 #include "generators.h";
 
-void baserand(int XiData[256][12])
+void baserand(int XiData[256][12], int*** XiDataN, int kk[3], int*** XiData3, int section)
 {
-	XiData[rand() % 256][0]++;
+	int j = rand() % 256;
+	XiData[j][0]++;
+	XiData3[j][0][section]++;
+	if (kk[2] == 1) 
+	{
+		kk[0] = kk[1];
+		kk[1] = j;
+		XiDataN[kk[0]][kk[1]][0]++;
+	}
+	else 
+	{ 
+		kk[1] = j; 
+	}
+	kk[2] = (kk[2] + 1) % 2;
 }
 
 binaryNum Lehmer(binaryNum x0, binaryNum a, binaryNum c)
@@ -11,7 +24,7 @@ binaryNum Lehmer(binaryNum x0, binaryNum a, binaryNum c)
 	return x1;
 }
 
-binaryNum LehmerLow(binaryNum x0, binaryNum a, binaryNum c, int XiData[256][12])
+binaryNum LehmerLow(binaryNum x0, binaryNum a, binaryNum c, int XiData[256][12], int*** XiDataN, int kk[3], int*** XiData3, int section)
 {
 	x0 = Lehmer(x0, a, c);
 	int j = 0; int k = 1;
@@ -21,10 +34,22 @@ binaryNum LehmerLow(binaryNum x0, binaryNum a, binaryNum c, int XiData[256][12])
 		k = k * 2;
 	}
 	XiData[j][1]++;
+	XiData3[j][1][section]++;
+	if (kk[2] == 1)
+	{
+		kk[0] = kk[1];
+		kk[1] = j;
+		XiDataN[kk[0]][kk[1]][1]++;
+	}
+	else
+	{
+		kk[1] = j;
+	}
+	kk[2] = (kk[2] + 1) % 2;
 	return x0;
 }
 
-binaryNum LehmerHigh(binaryNum x0, binaryNum a, binaryNum c, int XiData[256][12])
+binaryNum LehmerHigh(binaryNum x0, binaryNum a, binaryNum c, int XiData[256][12], int*** XiDataN, int kk[3], int*** XiData3, int section)
 {
 	x0 = Lehmer(x0, a, c);
 	int j = 0; int k = 1;
@@ -34,10 +59,22 @@ binaryNum LehmerHigh(binaryNum x0, binaryNum a, binaryNum c, int XiData[256][12]
 		k = k * 2;
 	}
 	XiData[j][2]++;
+	XiData3[j][2][section]++;
+	if (kk[2] == 1)
+	{
+		kk[0] = kk[1];
+		kk[1] = j;
+		XiDataN[kk[0]][kk[1]][2]++;
+	}
+	else
+	{
+		kk[1] = j;
+	}
+	kk[2] = (kk[2] + 1) % 2;
 	return x0;
 }
 
-void L20(int x[], int XiData[256][12], int temp[])
+void L20(int x[], int XiData[256][12], int temp[], int*** XiDataN, int kk[3], int*** XiData3, int section)
 {
 	int j = 0; int k = 1;
 	for (int i = 0; i < 8; i++)
@@ -47,6 +84,18 @@ void L20(int x[], int XiData[256][12], int temp[])
 		k = k * 2;
 	}
 	XiData[j][3]++;
+	XiData3[j][3][section]++;
+	if (kk[2] == 1)
+	{
+		kk[0] = kk[1];
+		kk[1] = j;
+		XiDataN[kk[0]][kk[1]][3]++;
+	}
+	else
+	{
+		kk[1] = j;
+	}
+	kk[2] = (kk[2] + 1) % 2;
 	for (int i = 0; i<20; i++)
 	{
 		temp[i] = x[i+8];
@@ -57,7 +106,7 @@ void L20(int x[], int XiData[256][12], int temp[])
 	}
 }
 
-void L89(int x[], int XiData[256][12], int temp[])
+void L89(int x[], int XiData[256][12], int temp[], int*** XiDataN, int kk[3], int*** XiData3, int section)
 {
 	int j = 0; int k = 1;
 	for (int i = 0; i < 8; i++)
@@ -67,6 +116,19 @@ void L89(int x[], int XiData[256][12], int temp[])
 		k = k * 2;
 	}
 	XiData[j][4]++;
+
+	XiData3[j][4][section]++;
+	if (kk[2] == 1)
+	{
+		kk[0] = kk[1];
+		kk[1] = j;
+		XiDataN[kk[0]][kk[1]][4]++;
+	}
+	else
+	{
+		kk[1] = j;
+	}
+	kk[2] = (kk[2] + 1) % 2;
 	for (int i = 0; i < 89; i++)
 	{
 		temp[i] = x[i + 8];
@@ -77,7 +139,7 @@ void L89(int x[], int XiData[256][12], int temp[])
 	}
 }
 
-void geffee(int x[], int y[], int s[], int z[], int temp[], int XiData[256][12])
+void geffee(int x[], int y[], int s[], int z[], int temp[], int XiData[256][12], int*** XiDataN, int kk[3], int*** XiData3, int section)
 {
 	int j = 0; int k = 1;
 	for (int i = 0; i < 8; i++)
@@ -124,9 +186,21 @@ void geffee(int x[], int y[], int s[], int z[], int temp[], int XiData[256][12])
 		k = k * 2;
 	}
 	XiData[j][5]++;
+	XiData3[j][5][section]++;
+	if (kk[2] == 1)
+	{
+		kk[0] = kk[1];
+		kk[1] = j;
+		XiDataN[kk[0]][kk[1]][5]++;
+	}
+	else
+	{
+		kk[1] = j;
+	}
+	kk[2] = (kk[2] + 1) % 2;
 }
 
-void Wolfram(int r[32], int XiData[256][12], int temp[])
+void Wolfram(int r[32], int XiData[256][12], int temp[], int*** XiDataN, int kk[3], int*** XiData3, int section)
 {
 	int x = 0;
 	int q = 0; int k = 1;
@@ -145,19 +219,51 @@ void Wolfram(int r[32], int XiData[256][12], int temp[])
 		k = k * 2;
 	}
 	XiData[q][6]++;
+	XiData3[q][6][section]++;
+	if (kk[2] == 1)
+	{
+		kk[0] = kk[1];
+		kk[1] = q;
+		XiDataN[kk[0]][kk[1]][6]++;
+	}
+	else
+	{
+		kk[1] = q;
+	}
+	kk[2] = (kk[2] + 1) % 2;
 }
 
-void Librarian(int x[], int XiData[256][12])
+void Librarian(int x[], int XiData[256][12], int*** XiDataN, int kk[3], int*** XiData3, int section)
 {
 	ofstream file2("junk.txt");
 	ifstream file("text2.txt");
+	int r=0;
+	int r_count=0;
 	for (char c; file.get(c); file2.put(c)) {
+		if (r_count == section)
+		{
+			r_count = 0;
+			r++;
+		}
 		XiData[int(c)][7]++;
+		XiData3[int(c)][7][r]++;
+		if (kk[2] == 1)
+		{
+			kk[0] = kk[1];
+			kk[1] = int(c);
+			XiDataN[kk[0]][kk[1]][7]++;
+		}
+		else
+		{
+			kk[1] = int(c);
+		}
+		kk[2] = (kk[2] + 1) % 2;
+		r_count++;
 	}
 }
 
 
-bignum BMbit(bignum T, bignum p, bignum q, bignum a, bignum mu, int XiData[256][12])
+bignum BMbit(bignum T, bignum p, bignum q, bignum a, bignum mu, int XiData[256][12], int*** XiDataN, int kk[3])
 {
 	int x = 0;
 	int j = 0; int k = 1;
@@ -179,10 +285,21 @@ bignum BMbit(bignum T, bignum p, bignum q, bignum a, bignum mu, int XiData[256][
 		delete[] T1.num;
 	}
 	XiData[j][8]++;
+	if (kk[2] == 1)
+	{
+		kk[0] = kk[1];
+		kk[1] = j;
+		XiDataN[kk[0]][kk[1]][4]++;
+	}
+	else
+	{
+		kk[1] = j;
+	}
+	kk[2] = (kk[2] + 1) % 2;
 	return T;
 }
 
-bignum BMbite(bignum T, bignum p, bignum q, bignum a, bignum mu, int XiData[256][12])
+bignum BMbite(bignum T, bignum p, bignum q, bignum a, bignum mu, int XiData[256][12], int*** XiDataN, int kk[3])
 {
 	int x = 0;
 	int j = 0; int k = 1;
@@ -201,10 +318,21 @@ bignum BMbite(bignum T, bignum p, bignum q, bignum a, bignum mu, int XiData[256]
 	T = copy(T, T1);
 	delete[] T1.num;
 	XiData[j][9]++;
+	if (kk[2] == 1)
+	{
+		kk[0] = kk[1];
+		kk[1] = j;
+		XiDataN[kk[0]][kk[1]][4]++;
+	}
+	else
+	{
+		kk[1] = j;
+	}
+	kk[2] = (kk[2] + 1) % 2;
 	return T;
 }
 
-bignum BBSbit(bignum T, bignum n, bignum mu, int XiData[256][12])
+bignum BBSbit(bignum T, bignum n, bignum mu, int XiData[256][12], int*** XiDataN, int kk[3])
 {
 	int j = 0;
 	int k = 1;
@@ -218,10 +346,21 @@ bignum BBSbit(bignum T, bignum n, bignum mu, int XiData[256][12])
 		delete[] T1.num;
 	}
 	XiData[j][10]++;
+	if (kk[2] == 1)
+	{
+		kk[0] = kk[1];
+		kk[1] = j;
+		XiDataN[kk[0]][kk[1]][4]++;
+	}
+	else
+	{
+		kk[1] = j;
+	}
+	kk[2] = (kk[2] + 1) % 2;
 	return T;
 }
 
-bignum BBSbite(bignum T, bignum n, bignum mu, int XiData[256][12])
+bignum BBSbite(bignum T, bignum n, bignum mu, int XiData[256][12], int*** XiDataN, int kk[3])
 {
 	int j = 0; int k = 1;
 	bignum T1;
@@ -252,4 +391,64 @@ bignum copy_randomise(bignum T, bignum p)
 	}
 	T.num[T.length - 1] = rand() % (p.num[T.length - 1] - 1);
 	return T;
+}
+
+void Xi2_R(int XiData[256][12], double Xi2[12], double m)
+{
+	for (int j = 0; j < 12; j++) {
+		for (int i = 0; i < 256; i++)
+		{
+			Xi2[j] += (double(XiData[i][j] - m) * (XiData[i][j] - m) / m);
+		}
+	}
+}
+
+void Xi2_N(int*** XiDataN, double Xi2[12], int m)
+{
+	int vj = 0;
+	int aj = 0;
+	for (int k = 0; k < 12; k++) {
+		for (int i = 0; i < 256; i++)
+		{
+			for (int j = 0; j < 256; j++)
+			{
+				vj = 0; aj = 0;
+				for (int j2 = 0; j2 < 256; j2++)
+				{
+					vj = vj + XiDataN[i][j2][k];
+					aj = aj + XiDataN[j2][j][k];
+				}
+				if ((vj != 0) && (aj != 0))
+				{
+					Xi2[k] += (double(XiDataN[i][j][k]) * (XiDataN[i][j][k]) / (double(vj) * aj));
+				}
+			}
+		}
+		Xi2[k] = (Xi2[k] - 1) * m;
+	}
+}
+
+void Xi2_O(int*** XiDataN, double Xi2[12], int m, int r)
+{
+	int vj = 0;
+	int aj = 0;
+	for (int k = 0; k < 12; k++) 
+	{
+		for (int i = 0; i < 256; i++)
+		{
+			for (int j = 0; j < 256; j++)
+			{
+				vj = 0; aj = m;
+				for (int j2 = 0; j2 < r; j2++)
+				{
+					vj = vj + XiDataN[i][j2][k];
+				}
+				if ((vj != 0) && (aj != 0)) 
+				{
+					Xi2[k] += (double(XiDataN[i][j][k]) * (XiDataN[i][j][k]) / ((double(vj) * aj)));
+				}
+			}
+		}
+		Xi2[k] = (Xi2[k] - 1) * m*r;
+	}
 }
