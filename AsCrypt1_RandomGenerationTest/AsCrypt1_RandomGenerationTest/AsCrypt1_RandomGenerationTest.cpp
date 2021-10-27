@@ -74,6 +74,17 @@ int main()
 		}
 	}
 
+	for (int i = 0; i < 256; i++)
+	{
+		for (int k = 0; k < r; k++)
+		{
+			for (int j = 0; j < 12; j++)
+			{
+				XiData3[i][j][k] = 0;
+			}
+		}
+	}
+
 	binaryNum a;
 	a.num[0] = 1;
 	a.num[16] = 1;
@@ -134,14 +145,14 @@ int main()
 	bignum n; n = p2 * q2;
 	bignum mu2 = mu(n);
 	bignum T1; T1 = copy_randomise(T1, p2);
-	double m = 4194304 / 256;
-	int m2 = 4194304 / 2;
-	int m3 = 4194304 / r;
+	double m = 1048576 / 256; //4194304
+	int m2 = 1048576 / 2;
+	int m3 = 1048576 / r;
 
 	Librarian(r_Wolf, XiData, XiDataN, k8, XiData3, m3);
 	int r_count = 0;
 	int r2 = 0;
-	for (int i = 0; i < 4194304; i++)
+	/*for (int i = 0; i < 1048576; i++)
 	{
 		if (r_count == m3) 
 		{
@@ -159,6 +170,7 @@ int main()
 		//BMbit(T, p1, q1, a1, mu1, XiData);  //было трудно урегулировать утечку памяти
 		r_count++;
 	}
+	*/
 	Xi2_R(XiData, Xi2_1, m);
 	Xi2_N(XiDataN, Xi2_2, m2);
 	Xi2_O(XiData3, Xi2_3, m3, r);
@@ -167,37 +179,41 @@ int main()
 	string stroka2 = "; ";
 	ofstream file4;
 	file4.open("table.csv");
-	file4 << "alpha: ; a1; a2; a3; /n";
+	file4 << "alpha: ; a1; a2; a3; \n";
 	for (int i = 0; i < 3; i++)
 	{
 		stroka2 = stroka2 + to_string(alpha[i]) + ";";
 	}
-	file4 << stroka2;
+	file4 << stroka2 + "\n";
 	for (int i = 0; i < 3; i++)
 	{
 		stroka = stroka + to_string(Xi1[i])+";";
 	}
-	file4 << "E: ; X^2_1-a1; X^2_1-a2; X^2_1-a3; /n";
-	file4 << stroka;
+	file4 << "E: ; X^2_1-a1; X^2_1-a2; X^2_1-a3; \n";
+	file4 << stroka+ "\n";
+	stroka = "; ";
 	stroka2 = "; ";	
 	for (int i = 0; i < 3; i++)
 	{
 		stroka = stroka + to_string(Xi2[i]) + ";";
 	}
-	file4 << "I: ; X^2_1-a1; X^2_1-a2; X^2_1-a3; /n";
-	file4 << stroka;
+	file4 << "I: ; X^2_1-a1; X^2_1-a2; X^2_1-a3; \n";
+
+	file4 << stroka +"\n";
+	stroka = "; ";
 	for (int i = 0; i < 3; i++)
 	{
 		stroka = stroka + to_string(Xi3[i]) + ";";
 	}
-	file4 << "U: ; X^2_1-a1; X^2_1-a2; X^2_1-a3; /n";
-	file4 << stroka;
+	file4 << "U: ; X^2_1-a1; X^2_1-a2; X^2_1-a3; \n";
+	file4 << stroka+ "\n";
+	stroka = "; ";
 
 	for (int i = 0; i < 3; i++)
 	{
-		stroka2 = "a = :" + to_string(alpha[i]) + "; equal; independance; uniform; /n";
+		stroka2 = "a = :" + to_string(alpha[i]) + "; equal; independance; uniform; \n";
 		file4 << stroka2;
-		for (int j = 0; j < 8; j++)
+		for (int j = 7; j < 8; j++)
 		{
 			stroka = to_string(j) +"; ";
 			cout << "alpha: " << alpha[i] << ", generator = " << j << ", t = " << Xi2_1[j]<<" ";
@@ -223,9 +239,9 @@ int main()
 				stroka += "-;";
 			}			
 			cout << " t = " << Xi2_3[j] << ", ";
-			if (Xi2[i] > Xi2_2[j])
+			if (Xi3[i] > Xi2_3[j])
 			{
-				cout << "t>Xi^2, generator passsed uniformity test" << endl;
+				cout << "t<Xi^2, generator passsed uniformity test" << endl;
 				stroka += "+;";
 			}
 			else
@@ -233,7 +249,7 @@ int main()
 				cout << "t>Xi^2, generator have not uniformity test" << endl;
 				stroka += "-;";
 			}
-			stroka += "/n";
+			stroka += "\n";
 			file4 << stroka;
 		}
 	}

@@ -239,8 +239,9 @@ void Librarian(int x[], int XiData[256][12], int*** XiDataN, int kk[3], int*** X
 	ifstream file("text2.txt");
 	int r=0;
 	int r_count=0;
+	int n=0;
 	for (char c; file.get(c); file2.put(c)) {
-		if (r_count == section)
+		if (r_count == 5150722/12)
 		{
 			r_count = 0;
 			r++;
@@ -418,9 +419,11 @@ void Xi2_N(int*** XiDataN, double Xi2[12], int m)
 					vj = vj + XiDataN[i][j2][k];
 					aj = aj + XiDataN[j2][j][k];
 				}
+
+
 				if ((vj != 0) && (aj != 0))
 				{
-					Xi2[k] += (double(XiDataN[i][j][k]) * (XiDataN[i][j][k]) / (double(vj) * aj));
+					Xi2[k] += (double(XiDataN[i][j][k]) * double(XiDataN[i][j][k]) / ((vj)* double(aj)));
 				}
 			}
 		}
@@ -436,16 +439,16 @@ void Xi2_O(int*** XiDataN, double Xi2[12], int m, int r)
 	{
 		for (int i = 0; i < 256; i++)
 		{
-			for (int j = 0; j < 256; j++)
+			for (int j = 0; j < r; j++)
 			{
 				vj = 0; aj = m;
 				for (int j2 = 0; j2 < r; j2++)
 				{
-					vj = vj + XiDataN[i][j2][k];
+					vj = vj + XiDataN[i][k][j2];
 				}
 				if ((vj != 0) && (aj != 0)) 
 				{
-					Xi2[k] += (double(XiDataN[i][j][k]) * (XiDataN[i][j][k]) / ((double(vj) * aj)));
+					Xi2[k] += (double(XiDataN[i][k][j]) * (XiDataN[i][k][j]) / ((double(vj) * aj)));
 				}
 			}
 		}
