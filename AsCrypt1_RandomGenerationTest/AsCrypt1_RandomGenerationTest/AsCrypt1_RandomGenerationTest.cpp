@@ -145,6 +145,9 @@ int main()
 	bignum n; n = p2 * q2;
 	bignum mu2 = mu(n);
 	bignum T1; T1 = copy_randomise(T1, p2);
+
+	ZZ BSSn = conv<ZZ>("284100283511244958272321698211826428679") * conv<ZZ>("22582480853028265529707582510375286184991");
+	ZZ TBite = RandomBnd(BSSn);
 	double m = 1048576 / 256; //4194304
 	int m2 = 1048576 / 2;
 	int m3 = 1048576 / r;
@@ -166,11 +169,13 @@ int main()
 		L89(x_L89, XiData, temp, XiDataN, k5, XiData3, r2);
 		Wolfram(r_Wolf, XiData, temp, XiDataN, k7, XiData3, r2);
 		geffee(x_i, y_i, s_i, z_i, temp, XiData, XiDataN, k6, XiData3, r2);
-		//BBSbite(T1, n, mu2, XiData);
 		//BMbit(T, p1, q1, a1, mu1, XiData);  //было трудно урегулировать утечку памяти
 		r_count++;
+	}*/
+	for (int i = 0; i < 200000; i++)
+	{
+		TBite = BBSbite(TBite, BSSn, XiData, XiDataN, k12);
 	}
-	*/
 	Xi2_R(XiData, Xi2_1, m);
 	Xi2_N(XiDataN, Xi2_2, m2);
 	Xi2_O(XiData3, Xi2_3, m3, r);

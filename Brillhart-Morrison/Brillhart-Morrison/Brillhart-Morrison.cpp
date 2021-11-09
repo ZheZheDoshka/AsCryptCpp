@@ -85,7 +85,7 @@ int main()
 		alpha = (dec + u) / v;
 		a = alpha;
 		u = a * v - u;
-		b[k] = b[k-2] + b[k-1] * a;
+		b[k] = (b[k-2] + b[k-1] * a) % n;
 		b_2[k] = (b[k] * b[k]) % n;
 		if (b_2[k] > dec) { b_2[k] = b_2[k] - n; }
 		if (b_2[k] < 0) { b_2[k] = b_2[k] * -1; vi[0][k] = 1; }

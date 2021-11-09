@@ -300,6 +300,8 @@ bignum BMbit(bignum T, bignum p, bignum q, bignum a, bignum mu, int XiData[256][
 	return T;
 }
 
+
+
 bignum BMbite(bignum T, bignum p, bignum q, bignum a, bignum mu, int XiData[256][12], int*** XiDataN, int kk[3])
 {
 	int x = 0;
@@ -370,6 +372,16 @@ bignum BBSbite(bignum T, bignum n, bignum mu, int XiData[256][12], int*** XiData
 	j = j + k*T1.num[0]%2;
 	T = copy(T, T1);
 	delete[] T1.num;
+	XiData[j][11]++;
+	return T;
+}
+
+ZZ BBSbite(ZZ T, ZZ n, int XiData[256][12], int*** XiDataN, int kk[3])
+{
+	int j = 0; int k = 1;
+	T = (T * T) % n;
+	ZZ T1 = T % ZZ(256);
+	j = conv<int>(T1);
 	XiData[j][11]++;
 	return T;
 }

@@ -4,8 +4,10 @@
 #include "BinaryHexCalculator.h"
 #include <fstream>
 #include "Hexcalculator.h"
+#include <NTL/ZZ.h>
 
 using namespace std;
+using namespace NTL;
 
 void baserand(int XiData[256][12], int*** XiDataN, int kk[3], int*** XiData3, int section);
 binaryNum Lehmer(binaryNum x0, binaryNum a, binaryNum c);
@@ -20,6 +22,10 @@ void Librarian(int x[], int XiData[256][12], int*** XiDataN, int kk[3], int*** X
 bignum BMbit(bignum T, bignum p, bignum q, bignum a, bignum mu, int XiData[256][12], int*** XiDataN, int kk[3]);
 bignum BBSbite(bignum T, bignum n, bignum mu, int XiData[256][12], int*** XiDataN, int kk[3]);
 bignum BBSbit(bignum T, bignum n, bignum mu, int XiData[256][12], int*** XiDataN, int kk[3]);
+
+
+ZZ BBSbite(ZZ T, ZZ n, int XiData[256][12], int*** XiDataN, int kk[3]);
+
 
 
 void Xi2_R(int XiData[256][12], double Xi2[12], double m);
