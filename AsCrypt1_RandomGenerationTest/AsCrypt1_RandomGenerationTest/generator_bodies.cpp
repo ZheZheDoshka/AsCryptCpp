@@ -241,6 +241,7 @@ void Librarian(int x[], int XiData[256][12], int*** XiDataN, int kk[3], int*** X
 	int r_count=0;
 	int n=0;
 	for (char c; file.get(c); file2.put(c)) {
+		n++;
 		if (r_count == 5150722/12)
 		{
 			r_count = 0;
@@ -261,6 +262,7 @@ void Librarian(int x[], int XiData[256][12], int*** XiDataN, int kk[3], int*** X
 		kk[2] = (kk[2] + 1) % 2;
 		r_count++;
 	}
+
 }
 
 
@@ -376,13 +378,110 @@ bignum BBSbite(bignum T, bignum n, bignum mu, int XiData[256][12], int*** XiData
 	return T;
 }
 
-ZZ BBSbite(ZZ T, ZZ n, int XiData[256][12], int*** XiDataN, int kk[3])
+ZZ BBSbite(ZZ T, ZZ n, int XiData[256][12], int*** XiDataN, int kk[3], int*** XiData3, int section )
 {
 	int j = 0; int k = 1;
 	T = (T * T) % n;
 	ZZ T1 = T % ZZ(256);
 	j = conv<int>(T1);
 	XiData[j][11]++;
+	XiData3[j][11][section]++;
+	if (kk[2] == 1)
+	{
+		kk[0] = kk[1];
+		kk[1] = j;
+		XiDataN[kk[0]][kk[1]][9]++;
+	}
+	else
+	{
+		kk[1] = j;
+	}
+	kk[2] = (kk[2] + 1) % 2;
+	return T;
+}
+
+ZZ BBSbit(ZZ T, ZZ n, int XiData[256][12], int*** XiDataN, int kk[3], int*** XiData3, int section)
+{
+	int j = 0; int k = 1;
+	for (int i = 0; i < 8; i++) {
+		T = (T * T) % n;
+		j = j + pow(2, i) * bit(T, 0);
+	}
+	XiData[j][10]++;
+	XiData3[j][10][section]++;
+	if (kk[2] == 1)
+	{
+		kk[0] = kk[1];
+		kk[1] = j;
+		XiDataN[kk[0]][kk[1]][10]++;
+	}
+	else
+	{
+		kk[1] = j;
+	}
+	kk[2] = (kk[2] + 1) % 2;
+	return T;
+}
+
+ZZ BMbite(ZZ T, ZZ p, ZZ a, ZZ q, int XiData[256][12], int*** XiDataN, int kk[3], int*** XiData3, int section )
+{
+	int x = 0;
+	int j = 0; int k = 1;
+	ZZ T1;
+	T1 = PowerMod(a, T, p);
+	T = T1;
+	j = conv<int>((T1 * ZZ(256)) / (p - 1));
+	XiData[j][9]++;
+
+	XiData3[j][9][section]++;
+	if (kk[2] == 1)
+	{
+		kk[0] = kk[1];
+		kk[1] = j;
+		XiDataN[kk[0]][kk[1]][9]++;
+
+	}
+	else
+	{
+		kk[1] = j;
+	}
+	kk[2] = (kk[2] + 1) % 2;
+	return T;
+}
+
+ZZ BMbit(ZZ T, ZZ n, ZZ a, ZZ q, int XiData[256][12], int*** XiDataN, int kk[3], int*** XiData3, int section )
+{
+	int x = 0;
+	int j = 0; int k = 1;
+	ZZ T1;
+	for (int i = 0; i < 8; i++)
+	{
+		T1 = PowerMod(a, T, n);
+		if (T1 > q)
+		{
+			x = 1;
+		}
+		else
+		{
+			x = 0;
+		}
+		j += x * k;
+		k = k * 2;
+		T = T1;
+	}
+	XiData[j][8]++;
+	XiData3[j][8][section]++;
+	if (kk[2] == 1)
+	{
+		kk[0] = kk[1];
+		kk[1] = j;
+		XiDataN[kk[0]][kk[1]][8]++;
+	}
+	else
+	{
+		kk[1] = j;
+	}
+	kk[2] = (kk[2] + 1) % 2;
 	return T;
 }
 

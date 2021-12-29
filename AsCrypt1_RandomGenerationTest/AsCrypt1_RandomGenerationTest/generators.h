@@ -24,7 +24,11 @@ bignum BBSbite(bignum T, bignum n, bignum mu, int XiData[256][12], int*** XiData
 bignum BBSbit(bignum T, bignum n, bignum mu, int XiData[256][12], int*** XiDataN, int kk[3]);
 
 
-ZZ BBSbite(ZZ T, ZZ n, int XiData[256][12], int*** XiDataN, int kk[3]);
+ZZ BBSbite(ZZ T, ZZ n, int XiData[256][12], int*** XiDataN, int kk[3], int*** XiData3, int section);
+ZZ BBSbit(ZZ T, ZZ n, int XiData[256][12], int*** XiDataN, int kk[3], int*** XiData3, int section);
+
+ZZ BMbite(ZZ T, ZZ p, ZZ a, ZZ q, int XiData[256][12], int*** XiDataN, int kk[3], int*** XiData3, int section);
+ZZ BMbit(ZZ T, ZZ n, ZZ a, ZZ q, int XiData[256][12], int*** XiDataN, int kk[3], int*** XiData3, int section);
 
 
 

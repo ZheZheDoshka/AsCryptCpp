@@ -90,7 +90,7 @@ int main()
 	a.num[16] = 1;
 	int c = 119;
 	binaryNum c1 = intTobN(c);	//для лемана
-
+	ZZ c11; c11 = ZZ(119);
 	int temp[89];  //для L20, L89, wolf
 	int x_L20[20];
 	int x_L89[89];
@@ -126,9 +126,9 @@ int main()
 	string p = "CEA42B987C44FA642D80AD9F51F10457690DEF10C83D0BC1BCEE12FC3B6093E3";
 	string a_ = "5B88C41246790891C095E2878880342E88C79974303BD0400B090FE38A688356";
 	string q = "675215CC3E227D3216C056CFA8F8822BB486F788641E85E0DE77097E1DB049F1";
-	bignum p1; p1 = cnum16(p, p1);
-	bignum q1; q1 = cnum16(q, q1);
-	bignum a1; a1 = cnum16(a_, a1);
+	ZZ zzp = conv<ZZ>("93466510612868436543809057926265637055082661966786875228460721852868821292003");
+	ZZ zzq = conv<ZZ>("46733255306434218271904528963132818527541330983393437614230360926434410646001");
+	ZZ zza = conv<ZZ>("41402113656871763270073938229168765778879686959780184368336806110280536326998");
 	
 	/*bignum k2; k2 = cnum16("2", k2);
 	k2=multiply_errorfix(k2, k2, k2);
@@ -136,26 +136,21 @@ int main()
 
 	k2 = multiply_errorfix(k2, k2, k2);
 	cout16(k2);*/
-	bignum mu1 = mu(p1);
-	bignum T; T = copy_randomise(T, p1);
-	string p_2 ="D5BBB96D30086EC484EBA3D7F9CAEB07";
-	string q_2 = "425D2B9BFDB25B9CF6C416CC6E37B59C1F";
-	bignum p2; p2 = cnum16(p_2, p2);
-	bignum q2; q2 = cnum16(q_2, q2);
-	bignum n; n = p2 * q2;
-	bignum mu2 = mu(n);
-	bignum T1; T1 = copy_randomise(T1, p2);
 
 	ZZ BSSn = conv<ZZ>("284100283511244958272321698211826428679") * conv<ZZ>("22582480853028265529707582510375286184991");
+	//ZZ BMn = conv<ZZ>(zzq) * conv<ZZ>(zzp);
 	ZZ TBite = RandomBnd(BSSn);
+	ZZ Tbit = RandomBnd(BSSn);
+	ZZ Mbite = RandomBnd(zzp);
+	ZZ Mbit = RandomBnd(zzp);
 	double m = 1048576 / 256; //4194304
 	int m2 = 1048576 / 2;
-	int m3 = 1048576 / r;
+	int m3 = 1048576 / 8;
 
 	Librarian(r_Wolf, XiData, XiDataN, k8, XiData3, m3);
 	int r_count = 0;
 	int r2 = 0;
-	/*for (int i = 0; i < 1048576; i++)
+	for (int i = 0; i < 1048576; i++)
 	{
 		if (r_count == m3) 
 		{
@@ -169,13 +164,27 @@ int main()
 		L89(x_L89, XiData, temp, XiDataN, k5, XiData3, r2);
 		Wolfram(r_Wolf, XiData, temp, XiDataN, k7, XiData3, r2);
 		geffee(x_i, y_i, s_i, z_i, temp, XiData, XiDataN, k6, XiData3, r2);
-		//BMbit(T, p1, q1, a1, mu1, XiData);  //было трудно урегулировать утечку памяти
 		r_count++;
-	}*/
-	for (int i = 0; i < 200000; i++)
-	{
-		TBite = BBSbite(TBite, BSSn, XiData, XiDataN, k12);
 	}
+	r_count = 0;
+	r2 = 0;
+	m = 65536*4 / 256; //4194304
+	m2 = 65536*4 / 2;
+	m3 = 65536*4 / 8;
+	for (int i = 0; i < 65536*4; i++)
+	{
+		if (r_count == m3)
+		{
+			r_count = 0;
+			r2++;
+		}
+		TBite = BBSbite(TBite, BSSn, XiData, XiDataN, k12, XiData3, r2);
+		Tbit = BBSbit(TBite, BSSn, XiData, XiDataN, k11, XiData3, r2);
+		Mbite = BMbite(Mbite, zzp, zza, zzq, XiData, XiDataN, k10, XiData3, r2);
+		Mbit = BMbit(Mbit, zzp, zza, zzq, XiData, XiDataN, k9, XiData3, r2);
+		r_count++;
+	}
+
 	Xi2_R(XiData, Xi2_1, m);
 	Xi2_N(XiDataN, Xi2_2, m2);
 	Xi2_O(XiData3, Xi2_3, m3, r);
@@ -213,12 +222,12 @@ int main()
 	file4 << "U: ; X^2_1-a1; X^2_1-a2; X^2_1-a3; \n";
 	file4 << stroka+ "\n";
 	stroka = "; ";
-
+	string stroka3 = "";
 	for (int i = 0; i < 3; i++)
 	{
 		stroka2 = "a = :" + to_string(alpha[i]) + "; equal; independance; uniform; \n";
 		file4 << stroka2;
-		for (int j = 7; j < 8; j++)
+		for (int j =0; j < 12; j++)
 		{
 			stroka = to_string(j) +"; ";
 			cout << "alpha: " << alpha[i] << ", generator = " << j << ", t = " << Xi2_1[j]<<" ";
@@ -258,6 +267,37 @@ int main()
 			file4 << stroka;
 		}
 	}
+	string stroka4 = "";
+	string stroka5 = "";
+	file4 << "f theory: \n";
+	for (int i = 0; i < 3; i++)
+	{
+		stroka3 += to_string(Xi1[i]) + ";";
+		stroka4 += to_string(Xi2[i]) + ";";
+		stroka5 += to_string(Xi3[i]) + ";";
+	}
+	stroka3 += "\n";
+	stroka4 += "\n";
+	stroka5 += "\n";
+	file4 << stroka3;
+	file4 << stroka4;
+	file4 << stroka5;
+	file4 << "f practice: \n";
+	stroka3 = "";
+	stroka4 = "";
+	stroka5 = "";
+	for (int i = 0; i < 12; i++)
+	{
+		stroka3 += to_string(Xi2_1[i]) + ";";
+		stroka4 += to_string(Xi2_2[i]) + ";";
+		stroka5 += to_string(Xi2_3[i]) + ";";
+	}
+	stroka3 += "\n";
+	stroka4 += "\n";
+	stroka5 += "\n";
+	file4 << stroka3;
+	file4 << stroka4;
+	file4 << stroka5;
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
